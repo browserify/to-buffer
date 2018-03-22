@@ -23,6 +23,7 @@
 	},
 	"homepage": "https://github.com/mafintosh/to-buffer",
 	"dependencies": {
+		"buffer-from": "^1.1.2",
 		"isarray": "^2.0.5"
 	},
 	"devDependencies": {
