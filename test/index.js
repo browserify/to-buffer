@@ -8,22 +8,22 @@ var toBuffer = require('../');
 var fixtures = require('./fixtures.json');
 
 test('buffer returns buffer', function (t) {
-	t.same(toBuffer(new Buffer('hi')), new Buffer('hi'));
+	t.deepEqual(toBuffer(new Buffer('hi')), new Buffer('hi'));
 	t.end();
 });
 
 test('string returns buffer', function (t) {
-	t.same(toBuffer('hi'), new Buffer('hi'));
+	t.deepEqual(toBuffer('hi'), new Buffer('hi'));
 	t.end();
 });
 
 test('string + enc returns buffer', function (t) {
-	t.same(toBuffer('6869', 'hex'), new Buffer('hi'));
+	t.deepEqual(toBuffer('6869', 'hex'), new Buffer('hi'));
 	t.end();
 });
 
 test('array returns buffer', function (t) {
-	t.same(toBuffer([104, 105]), new Buffer('hi'));
+	t.deepEqual(toBuffer([104, 105]), new Buffer('hi'));
 	t.end();
 });
 
@@ -31,7 +31,7 @@ test('other input throws', function (t) {
 	try {
 		toBuffer(42);
 	} catch (err) {
-		t.same(err.message, 'The "data" argument must be a string, an Array, a Buffer, a TypedArray, or a DataView.');
+		t.deepEqual(err.message, 'The "data" argument must be a string, an Array, a Buffer, a TypedArray, or a DataView.');
 		t.end();
 	}
 });
