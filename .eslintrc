@@ -13,7 +13,6 @@
 		"new-cap": "warn",
 		"no-buffer-constructor": "warn",
 		"no-use-before-define": "warn",
-		"semi": ["warn", "never"],
 		"strict": "warn",
 	},
 }

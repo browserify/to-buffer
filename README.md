@@ -11,11 +11,12 @@ npm install to-buffer
 ## Usage
 
 ``` js
-var toBuffer = require('to-buffer')
-console.log(toBuffer('hi')) // <Buffer 68 69>
-console.log(toBuffer(Buffer('hi'))) // <Buffer 68 69>
-console.log(toBuffer('6869', 'hex')) // <Buffer 68 69>
-console.log(toBuffer(43)) // throws
+var toBuffer = require('to-buffer');
+
+console.log(toBuffer('hi')); // <Buffer 68 69>
+console.log(toBuffer(Buffer('hi'))); // <Buffer 68 69>
+console.log(toBuffer('6869', 'hex')); // <Buffer 68 69>
+console.log(toBuffer(43)); // throws
 ```
 
 ## License
