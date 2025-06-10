@@ -9,7 +9,11 @@
     "tape": "^4.4.0"
   },
   "scripts": {
-    "test": "standard && tape test.js"
+    "lint": "standard",
+    "pretest": "npm run lint",
+    "tests-only": "tape test.js",
+    "test": "npm run tests-only",
+    "posttest": "npx npm@\">= 10.2\" audit --production"
   },
   "repository": {
     "type": "git",
