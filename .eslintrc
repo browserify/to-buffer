@@ -10,12 +10,10 @@
 	"rules": {
 		"curly": "warn",
 		"func-style": "warn",
-		"indent": ["warn", 2],
 		"new-cap": "warn",
 		"no-buffer-constructor": "warn",
 		"no-use-before-define": "warn",
 		"semi": ["warn", "never"],
-		"space-before-function-paren": "warn",
 		"strict": "warn",
 	},
 }

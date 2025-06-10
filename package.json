@@ -1,28 +1,28 @@
 {
-  "name": "to-buffer",
-  "version": "1.1.1",
-  "description": "Pass in a string, get a buffer back. Pass in a buffer, get the same buffer back",
-  "main": "index.js",
-  "scripts": {
-    "lint": "eslint --ext=js,mjs .",
-    "pretest": "npm run lint",
-    "tests-only": "tape test.js",
-    "test": "npm run tests-only",
-    "posttest": "npx npm@\">= 10.2\" audit --production"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mafintosh/to-buffer.git"
-  },
-  "author": "Mathias Buus (@mafintosh)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mafintosh/to-buffer/issues"
-  },
-  "homepage": "https://github.com/mafintosh/to-buffer",
-  "devDependencies": {
-    "@ljharb/eslint-config": "^21.1.1",
-    "eslint": "=8.8.0",
-    "tape": "^4.4.0"
-  }
+	"name": "to-buffer",
+	"version": "1.1.1",
+	"description": "Pass in a string, get a buffer back. Pass in a buffer, get the same buffer back",
+	"main": "index.js",
+	"scripts": {
+		"lint": "eslint --ext=js,mjs .",
+		"pretest": "npm run lint",
+		"tests-only": "tape test.js",
+		"test": "npm run tests-only",
+		"posttest": "npx npm@\">= 10.2\" audit --production"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mafintosh/to-buffer.git"
+	},
+	"author": "Mathias Buus (@mafintosh)",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/mafintosh/to-buffer/issues"
+	},
+	"homepage": "https://github.com/mafintosh/to-buffer",
+	"devDependencies": {
+		"@ljharb/eslint-config": "^21.1.1",
+		"eslint": "=8.8.0",
+		"tape": "^4.4.0"
+	}
 }
