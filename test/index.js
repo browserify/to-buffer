@@ -1,5 +1,5 @@
 var tape = require('tape');
-var toBuffer = require('./');
+var toBuffer = require('../');
 
 tape('buffer returns buffer', function (t) {
 	t.same(toBuffer(Buffer('hi')), Buffer('hi'));

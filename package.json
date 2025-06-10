@@ -6,7 +6,7 @@
 	"scripts": {
 		"lint": "eslint --ext=js,mjs .",
 		"pretest": "npm run lint",
-		"tests-only": "tape test.js",
+		"tests-only": "tape 'test/**/*'",
 		"test": "npm run tests-only",
 		"posttest": "npx npm@\">= 10.2\" audit --production"
 	},
@@ -23,6 +23,6 @@
 	"devDependencies": {
 		"@ljharb/eslint-config": "^21.1.1",
 		"eslint": "=8.8.0",
-		"tape": "^4.4.0"
+		"tape": "^5.9.0"
 	}
 }
