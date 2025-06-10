@@ -31,7 +31,7 @@ test('other input throws', function (t) {
 	try {
 		toBuffer(42);
 	} catch (err) {
-		t.same(err.message, 'The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView.');
+		t.same(err.message, 'The "data" argument must be a string, an Array, a Buffer, a TypedArray, or a DataView.');
 		t.end();
 	}
 });

@@ -1,5 +1,7 @@
 'use strict';
 
+var isArray = require('isarray');
+
 var useUint8Array = typeof Uint8Array !== 'undefined';
 var useArrayBuffer = typeof ArrayBuffer !== 'undefined'
 	&& typeof Uint8Array !== 'undefined'
@@ -54,13 +56,16 @@ module.exports = function toBuffer(data, encoding) {
 	 * Convert to our current Buffer implementation
 	 */
 	if (
-		Buffer.isBuffer(data)
-			&& data.constructor
-			&& typeof data.constructor.isBuffer === 'function'
-			&& data.constructor.isBuffer(data)
+		isArray(data)
+		|| (
+			Buffer.isBuffer(data)
+				&& data.constructor
+				&& typeof data.constructor.isBuffer === 'function'
+				&& data.constructor.isBuffer(data)
+		)
 	) {
 		return Buffer.from(data);
 	}
 
-	throw new TypeError('The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView.');
+	throw new TypeError('The "data" argument must be a string, an Array, a Buffer, a TypedArray, or a DataView.');
 };

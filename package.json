@@ -20,6 +20,9 @@
 		"url": "https://github.com/mafintosh/to-buffer/issues"
 	},
 	"homepage": "https://github.com/mafintosh/to-buffer",
+	"dependencies": {
+		"isarray": "^2.0.5"
+	},
 	"devDependencies": {
 		"@ljharb/eslint-config": "^21.1.1",
 		"available-typed-arrays": "^1.0.7",
