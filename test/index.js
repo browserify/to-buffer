@@ -11,6 +11,11 @@ tape('string returns buffer', function (t) {
 	t.end();
 });
 
+tape('array returns buffer', function (t) {
+	t.same(toBuffer([104, 105]), Buffer('hi'));
+	t.end();
+});
+
 tape('string + enc returns buffer', function (t) {
 	t.same(toBuffer('6869', 'hex'), Buffer('hi'));
 	t.end();
