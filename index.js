@@ -1,5 +1,6 @@
 'use strict';
 
+var Buffer = require('safe-buffer').Buffer;
 var bufferFrom = require('buffer-from');
 var isArray = require('isarray');
 

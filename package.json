@@ -26,7 +26,8 @@
 	"homepage": "https://github.com/mafintosh/to-buffer",
 	"dependencies": {
 		"buffer-from": "^1.1.2",
-		"isarray": "^2.0.5"
+		"isarray": "^2.0.5",
+		"safe-buffer": "^5.2.1"
 	},
 	"devDependencies": {
 		"@ljharb/eslint-config": "^21.1.1",
