@@ -1,7 +1,6 @@
 'use strict';
 
 var Buffer = require('safe-buffer').Buffer;
-var bufferFrom = require('buffer-from');
 var isArray = require('isarray');
 
 var useUint8Array = typeof Uint8Array !== 'undefined';
@@ -21,7 +20,7 @@ module.exports = function toBuffer(data, encoding) {
 
 	// Convert strings to Buffer
 	if (typeof data === 'string') {
-		return bufferFrom(data, encoding);
+		return Buffer.from(data, encoding);
 	}
 
 	/*
@@ -34,7 +33,7 @@ module.exports = function toBuffer(data, encoding) {
 			return Buffer.alloc(0);
 		}
 
-		var res = bufferFrom(data.buffer, data.byteOffset, data.byteLength);
+		var res = Buffer.from(data.buffer, data.byteOffset, data.byteLength);
 		/*
 		 * Recheck result size, as offset/length doesn't work on Node.js <5.10
 		 * We just go to Uint8Array case if this fails
@@ -49,7 +48,7 @@ module.exports = function toBuffer(data, encoding) {
 	 * Doesn't make sense with other TypedArray instances
 	 */
 	if (useUint8Array && data instanceof Uint8Array) {
-		return bufferFrom(data);
+		return Buffer.from(data);
 	}
 
 	/*
@@ -66,7 +65,7 @@ module.exports = function toBuffer(data, encoding) {
 				&& data.constructor.isBuffer(data)
 		)
 	) {
-		return bufferFrom(data);
+		return Buffer.from(data);
 	}
 
 	throw new TypeError('The "data" argument must be a string, an Array, a Buffer, a TypedArray, or a DataView.');
