@@ -51,14 +51,28 @@ module.exports = function toBuffer(data, encoding) {
 		return Buffer.from(data);
 	}
 
+	var isArr = isArray(data);
+	if (isArr) {
+		for (var i = 0; i < data.length; i += 1) {
+			var x = data[i];
+			if (
+				typeof x !== 'number'
+				|| x < 0
+				|| x > 255
+				|| ~~x !== x // NaN and integer check
+			) {
+				throw new RangeError('Array items must be numbers in the range 0-255.');
+			}
+		}
+	}
+
 	/*
 	 * Old Buffer polyfill on an engine that doesn't have TypedArray support
 	 * Also, this is from a different Buffer polyfill implementation then we have, as instanceof check failed
 	 * Convert to our current Buffer implementation
 	 */
 	if (
-		isArray(data)
-		|| (
+		isArr || (
 			Buffer.isBuffer(data)
 				&& data.constructor
 				&& typeof data.constructor.isBuffer === 'function'

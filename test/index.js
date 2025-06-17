@@ -24,6 +24,15 @@ test('string + enc returns buffer', function (t) {
 
 test('array returns buffer', function (t) {
 	t.deepEqual(toBuffer([104, 105]), new Buffer('hi'));
+
+	forEach([-1, 256, NaN, 4.2, Infinity], function (nonByte) {
+		t['throws'](
+			function () { toBuffer([0, 42, nonByte]); },
+			RangeError,
+			nonByte + ': arrays with out-of-bounds byte values throw'
+		);
+	});
+
 	t.end();
 });
 
