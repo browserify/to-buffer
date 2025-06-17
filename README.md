@@ -1,6 +1,6 @@
 # to-buffer <sup>[![Version Badge][2]][1]</sup>
 
-Pass in a string, get a buffer back. Pass in a buffer, get the same buffer back.
+Pass in a string, array, Buffer, Data View, or Uint8Array, and get a Buffer back.
 
 [![github actions][actions-image]][actions-url]
 [![coverage][codecov-image]][codecov-url]

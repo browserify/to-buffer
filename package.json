@@ -1,7 +1,7 @@
 {
 	"name": "to-buffer",
 	"version": "1.1.1",
-	"description": "Pass in a string, get a buffer back. Pass in a buffer, get the same buffer back",
+	"description": "Pass in a string, array, Buffer, Data View, or Uint8Array, and get a Buffer back.",
 	"main": "index.js",
 	"sideEffects": false,
 	"scripts": {
