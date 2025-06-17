@@ -16,14 +16,14 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/mafintosh/to-buffer.git"
+		"url": "https://github.com/browserify/to-buffer.git"
 	},
 	"author": "Mathias Buus (@mafintosh)",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/mafintosh/to-buffer/issues"
+		"url": "https://github.com/browserify/to-buffer/issues"
 	},
-	"homepage": "https://github.com/mafintosh/to-buffer",
+	"homepage": "https://github.com/browserify/to-buffer",
 	"dependencies": {
 		"isarray": "^2.0.5",
 		"safe-buffer": "^5.2.1"
