@@ -40,7 +40,7 @@ test('other input throws', function (t) {
 	try {
 		toBuffer(42);
 	} catch (err) {
-		t.deepEqual(err.message, 'The "data" argument must be a string, an Array, a Buffer, a TypedArray, or a DataView.');
+		t.deepEqual(err.message, 'The "data" argument must be a string, an Array, a Buffer, a Uint8Array, or a DataView.');
 		t.end();
 	}
 });

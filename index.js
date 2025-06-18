@@ -82,5 +82,5 @@ module.exports = function toBuffer(data, encoding) {
 		return Buffer.from(data);
 	}
 
-	throw new TypeError('The "data" argument must be a string, an Array, a Buffer, a TypedArray, or a DataView.');
+	throw new TypeError('The "data" argument must be a string, an Array, a Buffer, a Uint8Array, or a DataView.');
 };
