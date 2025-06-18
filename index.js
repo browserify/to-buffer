@@ -6,8 +6,8 @@ var isArray = require('isarray');
 var useUint8Array = typeof Uint8Array !== 'undefined';
 var useArrayBuffer = typeof ArrayBuffer !== 'undefined'
 	&& typeof Uint8Array !== 'undefined'
-	&& ArrayBuffer.isView
-	&& (Buffer.prototype instanceof Uint8Array || Buffer.TYPED_ARRAY_SUPPORT);
+	&& ArrayBuffer.isView;
+var useFromArrayBuffer = useArrayBuffer && (Buffer.prototype instanceof Uint8Array || Buffer.TYPED_ARRAY_SUPPORT);
 
 module.exports = function toBuffer(data, encoding) {
 	/*
@@ -18,7 +18,6 @@ module.exports = function toBuffer(data, encoding) {
 		return data;
 	}
 
-	// Convert strings to Buffer
 	if (typeof data === 'string') {
 		return Buffer.from(data, encoding);
 	}
@@ -33,13 +32,28 @@ module.exports = function toBuffer(data, encoding) {
 			return Buffer.alloc(0);
 		}
 
-		var res = Buffer.from(data.buffer, data.byteOffset, data.byteLength);
+		// When Buffer is based on Uint8Array, we can just construct it from ArrayBuffer
+		if (useFromArrayBuffer) {
+			var res = Buffer.from(data.buffer, data.byteOffset, data.byteLength);
+			/*
+			 * Recheck result size, as offset/length doesn't work on Node.js <5.10
+			 * We just go to Uint8Array case if this fails
+			 */
+			if (res.byteLength === data.byteLength) {
+				return res;
+			}
+		}
+
+		// Convert to Uint8Array bytes and then to Buffer
+		var uint8 = data instanceof Uint8Array ? data : new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
+		var result = Buffer.from(uint8);
+
 		/*
-		 * Recheck result size, as offset/length doesn't work on Node.js <5.10
-		 * We just go to Uint8Array case if this fails
+		 * Let's recheck that conversion succeeded
+		 * We have .length but not .byteLength when useFromArrayBuffer is false
 		 */
-		if (res.byteLength === data.byteLength) {
-			return res;
+		if (result.length === data.byteLength) {
+			return result;
 		}
 	}
 

@@ -7,4 +7,9 @@
 		"Uint8Array": "readonly",
 		"Uint16Array": "readonly",
 	},
+
+	"rules": {
+		"complexity": "off",
+		"max-lines-per-function": "off",
+	},
 }

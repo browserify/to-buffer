@@ -46,30 +46,26 @@ test('other input throws', function (t) {
 });
 
 test('handle all TA types', function (t) {
-	if (ArrayBuffer.isView && (Buffer.prototype instanceof Uint8Array || Buffer.TYPED_ARRAY_SUPPORT)) {
-		forEach(availableTypedArrays, function (type) {
-			var TA = global[type];
-			if (!(type in fixtures)) {
-				t.fail('No fixtures for ' + type);
-				return;
-			}
+	forEach(availableTypedArrays, function (type) {
+		var TA = global[type];
+		if (!(type in fixtures)) {
+			t.fail('No fixtures for ' + type);
+			return;
+		}
 
-			var input = fixtures[type].input;
-			if (typeof input[0] === 'string') {
-				for (var i = 0; i < input.length; i++) {
-					input[i] = BigInt(input[i]);
-				}
+		var input = fixtures[type].input;
+		if (typeof input[0] === 'string') {
+			for (var i = 0; i < input.length; i++) {
+				input[i] = BigInt(input[i]);
 			}
+		}
 
-			t.deepEqual(
-				toBuffer(new TA(input)),
-				new Buffer(fixtures[type].output),
-				type + ' should be converted to Buffer correctly'
-			);
-		});
-	} else {
-		t.skip('ArrayBuffer.isView and/or TypedArray not fully supported');
-	}
+		t.deepEqual(
+			toBuffer(new TA(input)),
+			new Buffer(fixtures[type].output),
+			type + ' should be converted to Buffer correctly'
+		);
+	});
 
 	t.end();
 });
