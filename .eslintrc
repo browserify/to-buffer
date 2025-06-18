@@ -4,6 +4,7 @@
 	"extends": "@ljharb",
 
 	"globals": {
+		"Float64Array": "readonly",
 		"Uint8Array": "readonly",
 		"Uint16Array": "readonly",
 	},
