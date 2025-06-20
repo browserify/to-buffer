@@ -19,11 +19,7 @@ var useArrayBuffer = typeof ArrayBuffer !== 'undefined'
 var useFromArrayBuffer = useArrayBuffer && (Buffer.prototype instanceof Uint8Array || Buffer.TYPED_ARRAY_SUPPORT);
 
 module.exports = function toBuffer(data, encoding) {
-	/*
-	 * No need to do anything for exact instance
-	 * This is only valid when safe-buffer.Buffer === buffer.Buffer, i.e. when Buffer.from/Buffer.alloc existed
-	 */
-	if (data instanceof Buffer) {
+	if (Buffer.isBuffer(data)) {
 		return data;
 	}
 
