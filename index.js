@@ -2,11 +2,20 @@
 
 var Buffer = require('safe-buffer').Buffer;
 var isArray = require('isarray');
+var typedArrayBuffer = require('typed-array-buffer');
+
+var isView = ArrayBuffer.isView || function isView(obj) {
+	try {
+		typedArrayBuffer(obj);
+		return true;
+	} catch (e) {
+		return false;
+	}
+};
 
 var useUint8Array = typeof Uint8Array !== 'undefined';
 var useArrayBuffer = typeof ArrayBuffer !== 'undefined'
-	&& typeof Uint8Array !== 'undefined'
-	&& ArrayBuffer.isView;
+	&& typeof Uint8Array !== 'undefined';
 var useFromArrayBuffer = useArrayBuffer && (Buffer.prototype instanceof Uint8Array || Buffer.TYPED_ARRAY_SUPPORT);
 
 module.exports = function toBuffer(data, encoding) {
@@ -26,7 +35,7 @@ module.exports = function toBuffer(data, encoding) {
 	 * Wrap any TypedArray instances and DataViews
 	 * Makes sense only on engines with full TypedArray support -- let Buffer detect that
 	 */
-	if (useArrayBuffer && ArrayBuffer.isView(data)) {
+	if (useArrayBuffer && isView(data)) {
 		// Bug in Node.js <6.3.1, which treats this as out-of-bounds
 		if (data.byteLength === 0) {
 			return Buffer.alloc(0);
