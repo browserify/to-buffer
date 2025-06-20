@@ -1,6 +1,6 @@
 {
 	"name": "to-buffer",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"description": "Pass in a string, array, Buffer, Data View, or Uint8Array, and get a Buffer back.",
 	"main": "index.js",
 	"sideEffects": false,

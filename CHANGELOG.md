@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.2.1](https://github.com/browserify/to-buffer/compare/v1.2.0...v1.2.1) - 2025-06-19
+
+### Commits
+
+- [Fix] handle non-Uint8Arrays in node &lt; 3 [`7f8a881`](https://github.com/browserify/to-buffer/commit/7f8a881929133935f8e15ffd60d6dbbc513b2c5f)
+- [Tests] add coverage [`286c96a`](https://github.com/browserify/to-buffer/commit/286c96a52cfeee14a2ba974d78071bdd667e9360)
+- [Fix] provide a fallback for engines without `ArrayBuffer.isView` [`e336166`](https://github.com/browserify/to-buffer/commit/e336166b8f4bf13860bafa191ee1ec53fca2e331)
+- [Fix] correct error message [`b45247e`](https://github.com/browserify/to-buffer/commit/b45247ed337fb44b2c8d74a14e8f86d985119fb9)
+
 ## [v1.2.0](https://github.com/browserify/to-buffer/compare/v1.1.1...v1.2.0) - 2025-06-17
 
 ### Commits
