@@ -46,6 +46,8 @@
 	"publishConfig": {
 		"ignore": [
 			".github/workflows",
+			".eslintrc",
+			".nycrc",
 			"test"
 		]
 	},
