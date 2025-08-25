@@ -30,7 +30,7 @@
 		"typed-array-buffer": "^1.0.3"
 	},
 	"devDependencies": {
-		"@ljharb/eslint-config": "^21.1.1",
+		"@ljharb/eslint-config": "^21.2.0",
 		"auto-changelog": "^2.5.0",
 		"available-typed-arrays": "^1.0.7",
 		"encoding": "^0.1.13",
