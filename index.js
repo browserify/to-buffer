@@ -20,6 +20,10 @@ var useFromArrayBuffer = useArrayBuffer && (Buffer.prototype instanceof Uint8Arr
 
 module.exports = function toBuffer(data, encoding) {
 	if (Buffer.isBuffer(data)) {
+		if (data.constructor && !('isBuffer' in data)) {
+			// probably a SlowBuffer
+			return Buffer.from(data);
+		}
 		return data;
 	}
 
@@ -93,9 +97,9 @@ module.exports = function toBuffer(data, encoding) {
 	if (
 		isArr || (
 			Buffer.isBuffer(data)
-				&& data.constructor
-				&& typeof data.constructor.isBuffer === 'function'
-				&& data.constructor.isBuffer(data)
+			&& data.constructor
+			&& typeof data.constructor.isBuffer === 'function'
+			&& data.constructor.isBuffer(data)
 		)
 	) {
 		return Buffer.from(data);

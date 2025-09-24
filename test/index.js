@@ -5,12 +5,31 @@ var availableTypedArrays = require('available-typed-arrays')();
 var forEach = require('for-each');
 var typedArrayBuffer = require('typed-array-buffer');
 var SafeBuffer = require('safe-buffer').Buffer;
+var SlowBuffer = require('buffer').SlowBuffer;
 
 var toBuffer = require('../');
 var fixtures = require('./fixtures.json');
 
 test('buffer returns buffer', function (t) {
-	t.deepEqual(toBuffer(new Buffer('hi')), new Buffer('hi'));
+	var result = toBuffer(new Buffer('hi'));
+
+	t.deepEqual(result, new Buffer('hi'));
+	t.ok(result instanceof Buffer, 'is a Buffer');
+	t.notOk(result instanceof SlowBuffer, 'not a SlowBuffer');
+
+	t.end();
+});
+
+test('SlowBuffer returns Buffer', { skip: SlowBuffer.name === 'deprecated' }, function (t) {
+	var slow = new SlowBuffer(2);
+	slow[0] = 7;
+	slow[1] = 8;
+	var result = toBuffer(slow);
+
+	t.deepEqual(result, new Buffer([7, 8]));
+	t.ok(result instanceof Buffer, 'is a Buffer');
+	t.notOk(result instanceof SlowBuffer, 'not a SlowBuffer');
+
 	t.end();
 });
 
