@@ -1,0 +1,25 @@
+name: 'Tests: node.js on s390x'
+
+on: [pull_request, push]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: uraimo/run-on-arch-action@v3
+        with:
+          arch: s390x
+          distro: ubuntu_latest
+          install: |
+            apt-get update -q -y
+            apt-get install -q -y curl
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+            . ~/.nvm/nvm.sh
+            nvm install node
+            node -v
+            npm -v
+          run: |
+            npm install
+            npm run tests-only
