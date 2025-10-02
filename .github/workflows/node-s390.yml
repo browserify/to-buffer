@@ -3,23 +3,68 @@ name: 'Tests: node.js on s390x'
 on: [pull_request, push]
 
 jobs:
-  tests:
+  # Alternative 1: Using docker/setup-qemu-action with manual docker run
+  tests-qemu-manual:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
 
-      - uses: uraimo/run-on-arch-action@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: s390x
+
+      - name: Run tests on s390x using Docker
+        run: |
+          docker run --rm --platform linux/s390x \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            node:18 \
+            bash -c "
+              apt-get update -q -y && \
+              apt-get install -q -y git && \
+              npm install && \
+              npm run tests-only
+            "
+
+  # Alternative 2: Using uraimo/run-on-arch-action (original approach)
+  tests-run-on-arch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: uraimo/run-on-arch-action@v2
+        name: Run tests on s390x
         with:
           arch: s390x
-          distro: ubuntu_latest
+          distro: ubuntu22.04
+          githubToken: ${{ github.token }}
+          setup: |
+            mkdir -p "${PWD}/artifacts"
+          dockerRunArgs: |
+            --volume "${PWD}/artifacts:/artifacts"
           install: |
             apt-get update -q -y
-            apt-get install -q -y curl
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-            . ~/.nvm/nvm.sh
-            nvm install node
+            apt-get install -q -y curl git
+            curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+            apt-get install -y nodejs
+          run: |
             node -v
             npm -v
-          run: |
             npm install
             npm run tests-only
+
+  # Alternative 3: Using GitHub's buildjet runners (if available)
+  tests-buildjet:
+    runs-on: buildjet-2vcpu-ubuntu-2204-arm
+    continue-on-error: true  # This might not be available for all repos
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js via Docker on s390x
+        run: |
+          docker run --rm --platform linux/s390x \
+            -v $PWD:/workspace \
+            -w /workspace \
+            node:18 \
+            bash -c "npm install && npm run tests-only"
