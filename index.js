@@ -16,7 +16,14 @@ var isView = ArrayBuffer.isView || function isView(obj) {
 var useUint8Array = typeof Uint8Array !== 'undefined';
 var useArrayBuffer = typeof ArrayBuffer !== 'undefined'
 	&& typeof Uint8Array !== 'undefined';
-var useFromArrayBuffer = useArrayBuffer && (Buffer.prototype instanceof Uint8Array || Buffer.TYPED_ARRAY_SUPPORT);
+// Check if we're on a big-endian system
+var isBigEndian = (function() {
+	var buffer = new ArrayBuffer(2);
+	new DataView(buffer).setInt16(0, 256, true); // little-endian
+	return new Int16Array(buffer)[0] !== 256;
+})();
+
+var useFromArrayBuffer = useArrayBuffer && (Buffer.prototype instanceof Uint8Array || Buffer.TYPED_ARRAY_SUPPORT) && !isBigEndian;
 
 module.exports = function toBuffer(data, encoding) {
 	if (Buffer.isBuffer(data)) {
@@ -54,7 +61,40 @@ module.exports = function toBuffer(data, encoding) {
 		}
 
 		// Convert to Uint8Array bytes and then to Buffer
-		var uint8 = data instanceof Uint8Array ? data : new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
+		var uint8;
+		if (data instanceof Uint8Array || data instanceof Uint8ClampedArray) {
+			// These are already byte arrays, no endianness issues
+			uint8 = new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
+		} else {
+			// For multi-byte TypedArrays, ensure consistent little-endian byte order
+			// Read element values directly and write them in little-endian format
+			var elemSize = data.BYTES_PER_ELEMENT;
+			var elemCount = data.length;
+			uint8 = new Uint8Array(data.byteLength);
+			var outputView = new DataView(uint8.buffer);
+
+			// Copy each element value, writing in little-endian format
+			for (var j = 0; j < elemCount; j++) {
+				var offset = j * elemSize;
+				var value = data[j]; // Get the actual element value
+
+				// Write the value in little-endian format based on size
+				if (elemSize === 1) {
+					// 8-bit values have no endianness
+					outputView.setUint8(offset, value);
+				} else if (elemSize === 2) {
+					// 16-bit values - write as little-endian
+					outputView.setUint16(offset, value, true);
+				} else if (elemSize === 4) {
+					// 32-bit values - write as little-endian
+					outputView.setUint32(offset, value, true);
+				} else if (elemSize === 8) {
+					// 64-bit values - write as little-endian
+					outputView.setBigUint64(offset, value, true);
+				}
+			}
+		}
+
 		var result = Buffer.from(uint8);
 
 		/*
