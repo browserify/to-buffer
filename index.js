@@ -83,19 +83,29 @@ module.exports = function toBuffer(data, encoding) {
 					// 8-bit values have no endianness
 					outputView.setUint8(offset, value);
 				} else if (elemSize === 2) {
-					// 16-bit values - write as little-endian
-					outputView.setUint16(offset, value, true);
+					// 16-bit values - handle signed vs unsigned
+					if (value < 0) {
+						outputView.setInt16(offset, value, true);
+					} else {
+						outputView.setUint16(offset, value, true);
+					}
 				} else if (elemSize === 4) {
 					// 32-bit values - check if it's a float
 					if (typeof value === 'number' && !Number.isInteger(value)) {
 						outputView.setFloat32(offset, value, true);
+					} else if (value < 0) {
+						outputView.setInt32(offset, value, true);
 					} else {
 						outputView.setUint32(offset, value, true);
 					}
 				} else if (elemSize === 8) {
 					// 64-bit values - check if it's a BigInt or float
 					if (typeof value === 'bigint') {
-						outputView.setBigUint64(offset, value, true);
+						if (value < 0n) {
+							outputView.setBigInt64(offset, value, true);
+						} else {
+							outputView.setBigUint64(offset, value, true);
+						}
 					} else if (typeof value === 'number') {
 						outputView.setFloat64(offset, value, true);
 					} else {
