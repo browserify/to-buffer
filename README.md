@@ -40,5 +40,5 @@ console.log(toBuffer(43)); // throws
 [downloads-url]: https://npm-stat.com/charts.html?package=to-buffer
 [codecov-image]: https://codecov.io/gh/browserify/to-buffer/branch/main/graphs/badge.svg
 [codecov-url]: https://app.codecov.io/gh/browserify/to-buffer/
-[actions-image]: https://img.shields.io/endpoint?url=https://github-actions-badge-u3jn4tfpocch.runkit.sh/browserify/to-buffer
+[actions-image]: https://img.shields.io/github/check-runs/browserify/to-buffer/main
 [actions-url]: https://github.com/browserify/to-buffer/actions
