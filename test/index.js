@@ -15,12 +15,14 @@ test('buffer returns buffer', function (t) {
 
 	t.deepEqual(result, new Buffer('hi'));
 	t.ok(result instanceof Buffer, 'is a Buffer');
-	t.notOk(result instanceof SlowBuffer, 'not a SlowBuffer');
+	if (SlowBuffer) {
+		t.notOk(result instanceof SlowBuffer, 'not a SlowBuffer');
+	}
 
 	t.end();
 });
 
-test('SlowBuffer returns Buffer', { skip: SlowBuffer.name === 'deprecated' }, function (t) {
+test('SlowBuffer returns Buffer', { skip: !SlowBuffer || SlowBuffer.name === 'deprecated' }, function (t) {
 	var slow = new SlowBuffer(2);
 	slow[0] = 7;
 	slow[1] = 8;
